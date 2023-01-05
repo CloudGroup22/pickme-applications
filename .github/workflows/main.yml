@@ -24,10 +24,5 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
-          function_name: pickmeRestaurantsService
+          function_name: pickmeRestaurantFunction
           zip_file: restaurants-service/build/distributions/restaurants-service.zip
-#           memory_size: 128
-#           timeout: 10
-#           handler: org.pickme.Handler::handleRequest
-#           role: arn:aws:iam::469391807613:role/service-role/pickmeRestaurantsService-role-8ptak74h
-#           runtime: java11
