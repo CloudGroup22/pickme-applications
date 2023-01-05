@@ -38,7 +38,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
       ResultSet rs = stmt.executeQuery("SELECT customer_last_name FROM customer");
       while (rs.next()) {
 //        System.out.println(rs.getString(1));
-        response += rs.getString(1) + "\n";
+        return rs.getString(1) + "\n";
       }
 
       // Close the connection
