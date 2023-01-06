@@ -66,6 +66,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
         logger.log("name only 2: " + paramObj.get("name").toString());
         stmt.setString(1,paramObj.get("name").toString()+ "%");
         logger.log("name only 2: " + stmt);
+        logger.log("name only 2: " + stmt);
       }/*else if(!paramObj.get("rating").toString().equals("")) {
         logger.log("rating only 2: " + paramObj.get("rating").toString());
         stmt.setString(1,paramObj.get("rating").toString()+ "%");
