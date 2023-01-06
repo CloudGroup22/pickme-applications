@@ -6,6 +6,7 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,6 +25,10 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
         logger.log("CONTEXT: " + gson.toJson(context));
         logger.log("EVENT: " + gson.toJson(event));
         logger.log("EVENT TYPE: " + event.getClass());
+
+        String evenParams = gson.toJson(event);
+        JsonObject paramObj = new Gson().fromJson(evenParams, JsonObject.class);
+        logger.log("paramObj: " + paramObj);
 
         try {
 
