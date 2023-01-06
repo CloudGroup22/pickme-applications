@@ -54,14 +54,14 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
         if(!paramObj.get("name").toString().replaceAll("\"", "").equals("")) {
           statementString += " AND";
         }
-        statementString += " WHERE rating LIKE ?";
+        statementString += " WHERE rating = ?";
       }
       logger.log("statementString: " + statementString);
       PreparedStatement stmt = conn.prepareStatement(statementString);
       if(!paramObj.get("name").toString().replaceAll("\"", "").equals("") && !paramObj.get("rating").toString().replaceAll("\"", "").equals("")) {
         logger.log("paramObj Name and rating has content 2: " + paramObj.get("name").toString() +","+paramObj.get("rating").toString());
         stmt.setString(1,paramObj.get("name").toString()+ "%");
-        stmt.setFloat(2,paramObj.get("rating").getAsFloat()+ "%");
+        stmt.setFloat(2,paramObj.get("rating").getAsFloat());
       }else if(!paramObj.get("name").toString().replaceAll("\"", "").equals("")) {
         logger.log("name only 2: " + paramObj.get("name").toString().replaceAll("\"", ""));
         stmt.setString(1,paramObj.get("name").toString().replaceAll("\"", "")+ "%");
@@ -70,7 +70,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
         logger.log("name only 2: " + stmt);
       }else if(!paramObj.get("rating").toString().replaceAll("\"", "").equals("")) {
         logger.log("rating only 2: " + paramObj.get("rating").toString());
-        stmt.setFloat(1,paramObj.get("rating").getAsFloat()+ "%");
+        stmt.setFloat(1,paramObj.get("rating").getAsFloat());
       }
 
       ResultSet rs = stmt.executeQuery();
