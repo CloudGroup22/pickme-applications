@@ -18,14 +18,14 @@ import com.google.gson.JsonObject;
 
 
 // Handler value: example.Handler
-public class Handler implements RequestHandler<Map<String,String>, JsonObject>{
+public class Handler implements RequestHandler<Map<String,String>, String>{
   Gson gson = new GsonBuilder().setPrettyPrinting().create();
   @Override
-  public JsonObject handleRequest(Map<String,String> event, Context context)
+  public String handleRequest(Map<String,String> event, Context context)
   {
     LambdaLogger logger = context.getLogger();
     //String response = "200 OK\n";
-    String response = "{ \"statusCode\": \"500\", \"message\": \"No Data Found!\"";
+    String response = "{ \"statusCode\": \"500\", \"message\": \"No Data Found!\"}";
     logger.log("ENVIRONMENT VARIABLES: " + gson.toJson(System.getenv()));
     logger.log("CONTEXT: " + gson.toJson(context));
     logger.log("EVENT: " + gson.toJson(event));
@@ -91,8 +91,7 @@ public class Handler implements RequestHandler<Map<String,String>, JsonObject>{
       logger.log("Exception: "+e.getMessage());
       e.printStackTrace();
     }
-    String json = "{ \"name\": \"Baeldung\", \"java\": true }";
-    JsonObject convertedObject = new Gson().fromJson(json, JsonObject.class);
+
     //return json
     JsonObject responseObject = new Gson().fromJson(response, JsonObject.class);
     return responseObject;
