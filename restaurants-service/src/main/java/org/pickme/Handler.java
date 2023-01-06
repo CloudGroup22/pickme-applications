@@ -75,7 +75,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
       }
 
       ResultSet rs = stmt.executeQuery();
-      String resultString = "["
+      String resultString = "[";
       while (rs.next()) {
 //        System.out.println(rs.getString(1));
         logger.log("results: " + rs.getString(1));
