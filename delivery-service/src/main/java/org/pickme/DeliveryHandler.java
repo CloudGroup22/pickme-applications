@@ -56,6 +56,7 @@ public class DeliveryHandler implements RequestHandler<Map<String,String>, Strin
       String resultString = "[";
       while (rs.next()) {
 //      System.out.println(rs.getString(1));
+        //      System.out.println(rs.getString(1));
         logger.log("results: " + rs.getString(1));
         resultString += "\"{ \"name\": \""+rs.getString(1)+"\", \"description\": \""+rs.getString(2)+"\", \"rating\": "+rs.getFloat(3)+"}\",";
         logger.log("results String: " + resultString);
