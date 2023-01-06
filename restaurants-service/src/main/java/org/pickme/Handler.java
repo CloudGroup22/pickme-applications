@@ -18,13 +18,14 @@ import com.google.gson.JsonObject;
 
 
 // Handler value: example.Handler
-public class Handler implements RequestHandler<Map<String,String>, String>{
+public class Handler implements RequestHandler<Map<String,String>, JsonObject>{
   Gson gson = new GsonBuilder().setPrettyPrinting().create();
   @Override
-  public String handleRequest(Map<String,String> event, Context context)
+  public JsonObject handleRequest(Map<String,String> event, Context context)
   {
     LambdaLogger logger = context.getLogger();
-    String response = "200 OK\n";
+    //String response = "200 OK\n";
+    String response = "{ \"statusCode\": \"500\", \"message\": \"No Data Found!\"";
     logger.log("ENVIRONMENT VARIABLES: " + gson.toJson(System.getenv()));
     logger.log("CONTEXT: " + gson.toJson(context));
     logger.log("EVENT: " + gson.toJson(event));
@@ -44,7 +45,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
       Connection conn = DriverManager.getConnection("jdbc:mysql://pickmefood.cn4g5pawgjm1.us-east-1.rds.amazonaws.com:3306/pickmefood?useSSL=false", "admin", "OgXqylVqq7LldFMq1tY8");
 
       // Execute a query and print the result
-      String statementString = "SELECT name,description,rating FROM Restaurant";
+      String statementString = "SELECT name,description,rating,menu FROM Restaurant";
       if(!paramObj.get("name").toString().replaceAll("\"", "").equals("")) {
         logger.log("paramObj Name has content: " + paramObj.get("name").toString());
         statementString += " WHERE name LIKE ?";
@@ -54,14 +55,14 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
         if(!paramObj.get("name").toString().replaceAll("\"", "").equals("")) {
           statementString += " AND";
         }
-        statementString += " WHERE rating LIKE ?";
+        statementString += " WHERE rating = ?";
       }
       logger.log("statementString: " + statementString);
       PreparedStatement stmt = conn.prepareStatement(statementString);
       if(!paramObj.get("name").toString().replaceAll("\"", "").equals("") && !paramObj.get("rating").toString().replaceAll("\"", "").equals("")) {
         logger.log("paramObj Name and rating has content 2: " + paramObj.get("name").toString() +","+paramObj.get("rating").toString());
         stmt.setString(1,paramObj.get("name").toString()+ "%");
-        stmt.setFloat(2,paramObj.get("rating").toFloat()+ "%");
+        stmt.setFloat(2,paramObj.get("rating").getAsFloat());
       }else if(!paramObj.get("name").toString().replaceAll("\"", "").equals("")) {
         logger.log("name only 2: " + paramObj.get("name").toString().replaceAll("\"", ""));
         stmt.setString(1,paramObj.get("name").toString().replaceAll("\"", "")+ "%");
@@ -70,14 +71,16 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
         logger.log("name only 2: " + stmt);
       }else if(!paramObj.get("rating").toString().replaceAll("\"", "").equals("")) {
         logger.log("rating only 2: " + paramObj.get("rating").toString());
-        stmt.setFloat(1,paramObj.get("rating").toFloat()+ "%");
+        stmt.setFloat(1,paramObj.get("rating").getAsFloat());
       }
 
       ResultSet rs = stmt.executeQuery();
       while (rs.next()) {
 //        System.out.println(rs.getString(1));
         logger.log("results: " + rs.getString(1));
-        return rs.getString(1) + "\n";
+        String resultString = "{ \"name\": "+rs.getString(1)+", \"description\": "+rs.getString(2)+", \"rating\": "+rs.getFloat(3)+"}";
+        JsonObject resultObject = new Gson().fromJson(resultString, JsonObject.class);
+        return resultObject;
       }
 
       // Close the connection
@@ -86,6 +89,8 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
       logger.log("Exception: "+e.getMessage());
       e.printStackTrace();
     }
-    return response;
+    //return json
+   // JsonObject responseObject = new Gson().fromJson(response, JsonObject.class);
+    return gson.toJson(response);
   }
 }
