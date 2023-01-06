@@ -37,3 +37,15 @@ jobs:
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: pickmeDeliveryFunction
           zip_file: delivery-service/build/distributions/delivery-service.zip
+      - name: Build order-service
+        run: |
+          cd order-service && ./gradlew clean build -x check
+      - name: deploy order-service
+        uses: appleboy/lambda-action@master
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: ${{ secrets.AWS_REGION }}
+          function_name: pickmePlaceOrderFunction
+          zip_file: delivery-service/build/distributions/order-service.zip
+
