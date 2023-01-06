@@ -31,7 +31,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
     logger.log("EVENT TYPE: " + event.getClass());
 
     String evenParams = gson.toJson(event);
-    JsonObject jobj = new Gson().fromJson(evenParams, JsonObject.class);
+    JsonObject paramObj = new Gson().fromJson(evenParams, JsonObject.class);
 //    JSONObject paramObj = new JSONObject(evenParams);
 
     try {
