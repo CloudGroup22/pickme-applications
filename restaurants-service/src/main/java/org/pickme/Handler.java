@@ -80,6 +80,7 @@ public class Handler implements RequestHandler<Map<String,String>, JsonObject>{
         logger.log("results: " + rs.getString(1));
         String resultString = "{ \"name\": "+rs.getString(1)+", \"description\": "+rs.getString(2)+", \"rating\": "+rs.getFloat(3)+"}";
         logger.log("results String: " + resultString);
+        logger.log("results String: " + resultString);
         JsonObject resultObject = new Gson().fromJson(resultString, JsonObject.class);
         return resultObject;
       }
