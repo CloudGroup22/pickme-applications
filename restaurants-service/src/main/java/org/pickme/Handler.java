@@ -49,27 +49,26 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
         logger.log("paramObj Name has content: " + paramObj.get("name").toString());
         statementString += " WHERE name LIKE ?";
       }
-      if(!paramObj.get("rating").toString().equals("")) {
+/*      if(!paramObj.get("rating").toString().equals("")) {
         logger.log("paramObj rating has content: " + paramObj.get("name").toString() +","+paramObj.get("rating").toString());
         if(!paramObj.get("name").toString().equals("")) {
           statementString += " AND";
         }
         statementString += " WHERE rating LIKE ?";
-      }
+      }*/
       logger.log("statementString: " + statementString);
       PreparedStatement stmt = conn.prepareStatement(statementString);
-      if(!paramObj.get("name").toString().equals("") && !paramObj.get("rating").toString().equals("")) {
+      /*if(!paramObj.get("name").toString().equals("") && !paramObj.get("rating").toString().equals("")) {
         logger.log("paramObj Name and rating has content 2: " + paramObj.get("name").toString() +","+paramObj.get("rating").toString());
         stmt.setString(1,paramObj.get("name").toString()+ "%");
         stmt.setString(2,paramObj.get("rating").toString()+ "%");
-      }else if(!paramObj.get("name").toString().equals("")) {
-        logger.log("paramObj name has content 2: " + paramObj.get("name").toString() +","+paramObj.get("rating").toString());
+      }else*/ if(!paramObj.get("name").toString().equals("")) {
         logger.log("name only 2: " + paramObj.get("name").toString());
         stmt.setString(1,paramObj.get("name").toString()+ "%");
-      }else if(!paramObj.get("rating").toString().equals("")) {
+      }/*else if(!paramObj.get("rating").toString().equals("")) {
         logger.log("rating only 2: " + paramObj.get("rating").toString());
         stmt.setString(1,paramObj.get("rating").toString()+ "%");
-      }
+      }*/
 
       ResultSet rs = stmt.executeQuery();
       while (rs.next()) {
