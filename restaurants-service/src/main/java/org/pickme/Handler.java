@@ -73,12 +73,14 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
       ResultSet rs = stmt.executeQuery();
       while (rs.next()) {
 //        System.out.println(rs.getString(1));
+        logger.log("results: " + rs.getString(1));
         return rs.getString(1) + "\n";
       }
 
       // Close the connection
       conn.close();
     } catch (Exception e) {
+      logger.log("Exception: "+e,getMessage());
       e.printStackTrace();
     }
     return response;
