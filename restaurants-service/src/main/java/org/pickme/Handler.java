@@ -34,13 +34,13 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
       // Execute a query and print the result
       String statementString = "SELECT name,description,rating FROM Restaurant";
       if(event.name != null) {
-        statementString += " WHERE name LIKE ?"
+        statementString += " WHERE name LIKE ?";
       }
       if(event.rating != null) {
         if(event.name != null) {
-          statementString += " AND"
+          statementString += " AND";
         }
-        statementString += " WHERE name LIKE ?"
+        statementString += " WHERE name LIKE ?";
       }
 
       PreparedStatement stmt = conn.prepareStatement(statementString);
