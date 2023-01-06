@@ -86,7 +86,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
 
       }
 
-      return resultString.deleteCharAt(resultString.length()-1);  +"]";
+      return resultString.deleteCharAt(resultString.length()-1) +"]";
       // Close the connection
       conn.close();
     } catch (Exception e) {
