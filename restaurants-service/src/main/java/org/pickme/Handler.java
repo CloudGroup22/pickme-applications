@@ -32,6 +32,8 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
 
     String evenParams = gson.toJson(event);
     JsonObject paramObj = new Gson().fromJson(evenParams, JsonObject.class);
+    logger.log("paramObj: " + paramObj);
+
 //    JSONObject paramObj = new JSONObject(evenParams);
 
     try {
@@ -56,6 +58,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
         stmt.setString(1,paramObj.get("name").toString()+ "%");
         stmt.setString(2,paramObj.get("rating").toString()+ "%");
       }else if(paramObj.get("name").toString() != null) {
+        logger.log("name only: " + paramObj.get("name").toString());
         stmt.setString(1,paramObj.get("name").toString()+ "%");
       }else if(paramObj.get("rating").toString() != null) {
         stmt.setString(1,paramObj.get("rating").toString()+ "%");
