@@ -45,28 +45,28 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
 
       // Execute a query and print the result
       String statementString = "SELECT name,description,rating FROM Restaurant";
-      if(paramObj.get("name").toString() != "") {
+      if(paramObj.get("name").toString().equals("")) {
         logger.log("paramObj Name has content: " + paramObj.get("name").toString());
         statementString += " WHERE name LIKE ?";
       }
-      if(paramObj.get("rating").toString() != "") {
+      if(!paramObj.get("rating").toString().equals("")) {
         logger.log("paramObj rating has content: " + paramObj.get("name").toString() +","+paramObj.get("rating").toString());
-        if(paramObj.get("name").toString() != "") {
+        if(!paramObj.get("name").toString().equals("")) {
           statementString += " AND";
         }
         statementString += " WHERE rating LIKE ?";
       }
       logger.log("statementString: " + statementString);
       PreparedStatement stmt = conn.prepareStatement(statementString);
-      if(paramObj.get("name").toString() != "" && paramObj.get("rating").toString() != "") {
+      if(!paramObj.get("name").toString().equals("") && !paramObj.get("rating").toString().equals("")) {
         logger.log("paramObj Name and rating has content 2: " + paramObj.get("name").toString() +","+paramObj.get("rating").toString());
         stmt.setString(1,paramObj.get("name").toString()+ "%");
         stmt.setString(2,paramObj.get("rating").toString()+ "%");
-      }else if(paramObj.get("name").toString() != "") {
+      }else if(!paramObj.get("name").toString().equals("")) {
         logger.log("paramObj name has content 2: " + paramObj.get("name").toString() +","+paramObj.get("rating").toString());
         logger.log("name only 2: " + paramObj.get("name").toString());
         stmt.setString(1,paramObj.get("name").toString()+ "%");
-      }else if(paramObj.get("rating").toString() != "") {
+      }else if(!paramObj.get("rating").toString().equals("")) {
         logger.log("rating only 2: " + paramObj.get("rating").toString());
         stmt.setString(1,paramObj.get("rating").toString()+ "%");
       }
