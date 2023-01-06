@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Map;
 
-// Handler value: example.Handler
 public class DeliveryHandler implements RequestHandler<Map<String,String>, String>{
   Gson gson = new GsonBuilder().setPrettyPrinting().create();
   @Override
@@ -21,17 +20,15 @@ public class DeliveryHandler implements RequestHandler<Map<String,String>, Strin
   {
     LambdaLogger logger = context.getLogger();
     String response = "200 OK\n";
-    // log execution details
-    logger.log("ENVIRONMENT VARIABLES: " + gson.toJson(System.getenv()));
+    //logger.log("ENVIRONMENT VARIABLES: " + gson.toJson(System.getenv()));
     logger.log("CONTEXT: " + gson.toJson(context));
-    // process event
     logger.log("EVENT: " + gson.toJson(event));
     logger.log("EVENT TYPE: " + event.getClass());
 
     try {
 
       // Connect to the database
-      Connection conn = DriverManager.getConnection("jdbc:mysql://pickme.cdeo3alrshbn.ap-northeast-1.rds.amazonaws.com:3306/pickme", "admin", "OgXqylVqq7LldFMq1tY8");
+      Connection conn = DriverManager.getConnection("jdbc:mysql://pickmefood.cn4g5pawgjm1.us-east-1.rds.amazonaws.com:3306/pickmefood", "admin", "OgXqylVqq7LldFMq1tY8");
 
       // Execute a query and print the result
       Statement stmt = conn.createStatement();

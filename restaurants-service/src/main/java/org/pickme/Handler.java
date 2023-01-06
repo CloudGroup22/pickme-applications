@@ -21,21 +21,41 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
   {
     LambdaLogger logger = context.getLogger();
     String response = "200 OK\n";
-    // log execution details
     logger.log("ENVIRONMENT VARIABLES: " + gson.toJson(System.getenv()));
     logger.log("CONTEXT: " + gson.toJson(context));
-    // process event
     logger.log("EVENT: " + gson.toJson(event));
     logger.log("EVENT TYPE: " + event.getClass());
 
     try {
 
       // Connect to the database
-      Connection conn = DriverManager.getConnection("jdbc:mysql://pickme.cdeo3alrshbn.ap-northeast-1.rds.amazonaws.com:3306/pickme", "admin", "OgXqylVqq7LldFMq1tY8");
+      Connection conn = DriverManager.getConnection("jdbc:mysql://pickmefood.cn4g5pawgjm1.us-east-1.rds.amazonaws.com:3306/pickmefood", "admin", "OgXqylVqq7LldFMq1tY8");
 
       // Execute a query and print the result
       Statement stmt = conn.createStatement();
-      ResultSet rs = stmt.executeQuery("SELECT customer_last_name FROM customer");
+      String statementString = "SELECT name,description,rating FROM Restaurant";
+      if(event.name != null) {
+        statementString += " WHERE name LIKE ?"
+      }
+      if(event.rating != null) {
+        if(event.name != null) {
+          statementString += " AND"
+        }
+        statementString += " WHERE name LIKE ?"
+      }
+
+      PreparedStatement stmt;
+      stmt = conn.prepareStatement(statementString);
+      if(event.name != null && event.rating != null) {
+        stmt.setString(1,event.name+ "%");
+        stmt.setString(2,event.rating+ "%");
+      }else if(event.name != null) {
+        stmt.setString(1,event.name+ "%");
+      }else if(event.rating != null) {
+        stmt.setString(1,event.rating+ "%");
+      }
+
+      ResultSet rs = stmt.executeQuery(statementString);
       while (rs.next()) {
 //        System.out.println(rs.getString(1));
         return rs.getString(1) + "\n";
