@@ -63,8 +63,8 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
         stmt.setString(1,paramObj.get("name").toString()+ "%");
         stmt.setString(2,paramObj.get("rating").toString()+ "%");
       }else*/ if(!paramObj.get("name").toString().equals("")) {
-        logger.log("name only 2: " + paramObj.get("name"));
-        stmt.setString(1, "MA%");
+        logger.log("name only 2: " + paramObj.get("name").toString().replaceAll("\"", ""));
+        stmt.setString(1,paramObj.get("name").toString().replaceAll("\"", "")+ "%");
         logger.log("name only 2: " + stmt);
         logger.log("name only 2: " + stmt);
       }/*else if(!paramObj.get("rating").toString().equals("")) {
