@@ -11,7 +11,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.Map;
+import com.google.gson.JsonElement;
 
 // Handler value: example.Handler
 public class Handler implements RequestHandler<Map<String,String>, String>{
@@ -26,6 +28,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
     logger.log("EVENT: " + gson.toJson(event));
     logger.log("EVENT TYPE: " + event.getClass());
 
+    JsonElement evenParams = gson.toJson(event);
     try {
 
       // Connect to the database
@@ -33,24 +36,24 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
 
       // Execute a query and print the result
       String statementString = "SELECT name,description,rating FROM Restaurant";
-      if(event.name != null) {
+      if(evenParams.name != null) {
         statementString += " WHERE name LIKE ?";
       }
-      if(event.rating != null) {
-        if(event.name != null) {
+      if(evenParams.rating != null) {
+        if(evenParams.name != null) {
           statementString += " AND";
         }
         statementString += " WHERE name LIKE ?";
       }
 
       PreparedStatement stmt = conn.prepareStatement(statementString);
-      if(event.name != null && event.rating != null) {
-        stmt.setString(1,event.name+ "%");
+      if(evenParams.name != null && evenParams.rating != null) {
+        stmt.setString(1,evenParams.name+ "%");
         stmt.setString(2,event.rating+ "%");
-      }else if(event.name != null) {
-        stmt.setString(1,event.name+ "%");
-      }else if(event.rating != null) {
-        stmt.setString(1,event.rating+ "%");
+      }else if(evenParams.name != null) {
+        stmt.setString(1,evenParams.name+ "%");
+      }else if(evenParams.rating != null) {
+        stmt.setString(1,evenParams.rating+ "%");
       }
 
       ResultSet rs = stmt.executeQuery();
