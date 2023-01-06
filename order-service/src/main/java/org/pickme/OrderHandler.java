@@ -32,7 +32,7 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
 
             // Execute a query and print the result
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Order");
+            ResultSet rs = stmt.executeQuery("SELECT deliveryStatus FROM OrderDetails");
             while (rs.next()) {
                 return rs.getString(1) + "\n";
             }
