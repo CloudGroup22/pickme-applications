@@ -32,7 +32,6 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
       Connection conn = DriverManager.getConnection("jdbc:mysql://pickmefood.cn4g5pawgjm1.us-east-1.rds.amazonaws.com:3306/pickmefood", "admin", "OgXqylVqq7LldFMq1tY8");
 
       // Execute a query and print the result
-      Statement stmt = conn.createStatement();
       String statementString = "SELECT name,description,rating FROM Restaurant";
       if(event.name != null) {
         statementString += " WHERE name LIKE ?"
@@ -44,8 +43,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
         statementString += " WHERE name LIKE ?"
       }
 
-      PreparedStatement stmt;
-      stmt = conn.prepareStatement(statementString);
+      PreparedStatement stmt = conn.prepareStatement(statementString);
       if(event.name != null && event.rating != null) {
         stmt.setString(1,event.name+ "%");
         stmt.setString(2,event.rating+ "%");
