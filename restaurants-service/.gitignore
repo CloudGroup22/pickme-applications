@@ -1,0 +1,6 @@
+# output file
+out
+.idea
+.gradle
+*.iml
+.DS_Store
