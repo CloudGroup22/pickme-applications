@@ -24,7 +24,8 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
   public JsonObject handleRequest(Map<String,String> event, Context context)
   {
     LambdaLogger logger = context.getLogger();
-    String response = "200 OK\n";
+    //String response = "200 OK\n";
+    String response = "{ \"statusCode\": \"500\", \"message\": \"No Data Found!\"";
     logger.log("ENVIRONMENT VARIABLES: " + gson.toJson(System.getenv()));
     logger.log("CONTEXT: " + gson.toJson(context));
     logger.log("EVENT: " + gson.toJson(event));
@@ -89,6 +90,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
       e.printStackTrace();
     }
     //return json
-    return response;
+    JsonObject responseObject = new Gson().fromJson(response, JsonObject.class);
+    return responseObject;
   }
 }
