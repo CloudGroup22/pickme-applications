@@ -53,7 +53,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
         stmt.setString(1,event.rating+ "%");
       }
 
-      ResultSet rs = stmt.executeQuery(statementString);
+      ResultSet rs = stmt.executeQuery();
       while (rs.next()) {
 //        System.out.println(rs.getString(1));
         return rs.getString(1) + "\n";
