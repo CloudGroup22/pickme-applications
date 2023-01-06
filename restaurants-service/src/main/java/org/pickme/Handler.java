@@ -90,7 +90,7 @@ public class Handler implements RequestHandler<Map<String,String>, JsonObject>{
       e.printStackTrace();
     }
     //return json
-    JsonObject responseObject = new Gson().fromJson(response, JsonObject.class);
-    return responseObject;
+   // JsonObject responseObject = new Gson().fromJson(response, JsonObject.class);
+    return gson.toJson(response);
   }
 }
