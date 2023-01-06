@@ -13,7 +13,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.util.Map;
-import com.google.gson.JsonElement;
+import org.json.simple.JSONObject;
+
+
 
 // Handler value: example.Handler
 public class Handler implements RequestHandler<Map<String,String>, String>{
@@ -28,7 +30,10 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
     logger.log("EVENT: " + gson.toJson(event));
     logger.log("EVENT TYPE: " + event.getClass());
 
-    JsonElement evenParams = gson.toJson(event);
+    String evenParams = gson.toJson(event);
+    JsonObject jobj = new Gson().fromJson(evenParams, JsonObject.class);
+//    JSONObject paramObj = new JSONObject(evenParams);
+
     try {
 
       // Connect to the database
@@ -36,24 +41,24 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
 
       // Execute a query and print the result
       String statementString = "SELECT name,description,rating FROM Restaurant";
-      if(evenParams.name != null) {
+      if(paramObj.get("name").toString() != null) {
         statementString += " WHERE name LIKE ?";
       }
-      if(evenParams.rating != null) {
-        if(evenParams.name != null) {
+      if(paramObj.get("rating").toString() != null) {
+        if(paramObj.get("name").toString() != null) {
           statementString += " AND";
         }
         statementString += " WHERE name LIKE ?";
       }
 
       PreparedStatement stmt = conn.prepareStatement(statementString);
-      if(evenParams.name != null && evenParams.rating != null) {
-        stmt.setString(1,evenParams.name+ "%");
-        stmt.setString(2,event.rating+ "%");
-      }else if(evenParams.name != null) {
-        stmt.setString(1,evenParams.name+ "%");
-      }else if(evenParams.rating != null) {
-        stmt.setString(1,evenParams.rating+ "%");
+      if(paramObj.get("name").toString() != null && paramObj.get("rating").toString() != null) {
+        stmt.setString(1,paramObj.get("name").toString()+ "%");
+        stmt.setString(2,paramObj.get("rating").toString()+ "%");
+      }else if(paramObj.get("name").toString() != null) {
+        stmt.setString(1,paramObj.get("name").toString()+ "%");
+      }else if(paramObj.get("rating").toString() != null) {
+        stmt.setString(1,paramObj.get("rating").toString()+ "%");
       }
 
       ResultSet rs = stmt.executeQuery();
