@@ -21,7 +21,7 @@ import com.google.gson.JsonObject;
 public class Handler implements RequestHandler<Map<String,String>, String>{
   Gson gson = new GsonBuilder().setPrettyPrinting().create();
   @Override
-  public String handleRequest(Map<String,String> event, Context context)
+  public JsonObject handleRequest(Map<String,String> event, Context context)
   {
     LambdaLogger logger = context.getLogger();
     String response = "200 OK\n";
@@ -44,7 +44,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
       Connection conn = DriverManager.getConnection("jdbc:mysql://pickmefood.cn4g5pawgjm1.us-east-1.rds.amazonaws.com:3306/pickmefood?useSSL=false", "admin", "OgXqylVqq7LldFMq1tY8");
 
       // Execute a query and print the result
-      String statementString = "SELECT name,description,rating FROM Restaurant";
+      String statementString = "SELECT name,description,rating,menu FROM Restaurant";
       if(!paramObj.get("name").toString().replaceAll("\"", "").equals("")) {
         logger.log("paramObj Name has content: " + paramObj.get("name").toString());
         statementString += " WHERE name LIKE ?";
@@ -77,7 +77,10 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
       while (rs.next()) {
 //        System.out.println(rs.getString(1));
         logger.log("results: " + rs.getString(1));
-        return rs.getString(1) + "\n";
+        String resultString = { "name": rs.getString(1),
+                "description": rs.getString(2), "rating": rs.getString(3), "menu": rs.getString(4)}
+        JsonObject resultObject = new Gson().fromJson(resultString, JsonObject.class);
+        return resultObject;
       }
 
       // Close the connection
@@ -86,6 +89,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
       logger.log("Exception: "+e.getMessage());
       e.printStackTrace();
     }
+    //return json
     return response;
   }
 }
