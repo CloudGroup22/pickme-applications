@@ -79,6 +79,7 @@ public class Handler implements RequestHandler<Map<String,String>, JsonObject>{
 //        System.out.println(rs.getString(1));
         logger.log("results: " + rs.getString(1));
         String resultString = "{ \"name\": "+rs.getString(1)+", \"description\": "+rs.getString(2)+", \"rating\": "+rs.getFloat(3)+"}";
+        logger.log("results String: " + resultString);
         JsonObject resultObject = new Gson().fromJson(resultString, JsonObject.class);
         return resultObject;
       }
@@ -90,7 +91,7 @@ public class Handler implements RequestHandler<Map<String,String>, JsonObject>{
       e.printStackTrace();
     }
     //return json
-   // JsonObject responseObject = new Gson().fromJson(response, JsonObject.class);
-    return gson.toJson(response);
+    JsonObject responseObject = new Gson().fromJson(response, JsonObject.class);
+    return responseObject;
   }
 }
