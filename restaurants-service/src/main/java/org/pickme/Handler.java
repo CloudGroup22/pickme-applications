@@ -45,7 +45,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
 
       // Execute a query and print the result
       String statementString = "SELECT name,description,rating FROM Restaurant";
-      if(paramObj.get("name").toString().equals("")) {
+      if(!paramObj.get("name").toString().equals("")) {
         logger.log("paramObj Name has content: " + paramObj.get("name").toString());
         statementString += " WHERE name LIKE ?";
       }
