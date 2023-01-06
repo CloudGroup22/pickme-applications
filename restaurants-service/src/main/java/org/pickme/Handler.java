@@ -43,24 +43,24 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
 
       // Execute a query and print the result
       String statementString = "SELECT name,description,rating FROM Restaurant";
-      if(paramObj.get("name").toString() != null) {
+      if(paramObj.get("name").toString() != "") {
         statementString += " WHERE name LIKE ?";
       }
-      if(paramObj.get("rating").toString() != null) {
-        if(paramObj.get("name").toString() != null) {
+      if(paramObj.get("rating").toString() != "") {
+        if(paramObj.get("name").toString() != "") {
           statementString += " AND";
         }
         statementString += " WHERE name LIKE ?";
       }
-
+      logger.log("statementString: " + statementString);
       PreparedStatement stmt = conn.prepareStatement(statementString);
-      if(paramObj.get("name").toString() != null && paramObj.get("rating").toString() != null) {
+      if(paramObj.get("name").toString() != "" && paramObj.get("rating").toString() != "") {
         stmt.setString(1,paramObj.get("name").toString()+ "%");
         stmt.setString(2,paramObj.get("rating").toString()+ "%");
-      }else if(paramObj.get("name").toString() != null) {
+      }else if(paramObj.get("name").toString() != "") {
         logger.log("name only: " + paramObj.get("name").toString());
         stmt.setString(1,paramObj.get("name").toString()+ "%");
-      }else if(paramObj.get("rating").toString() != null) {
+      }else if(paramObj.get("rating").toString() != "") {
         stmt.setString(1,paramObj.get("rating").toString()+ "%");
       }
 
