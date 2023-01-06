@@ -18,7 +18,7 @@ import com.google.gson.JsonObject;
 
 
 // Handler value: example.Handler
-public class Handler implements RequestHandler<Map<String,String>, String>{
+public class Handler implements RequestHandler<Map<String,String>, JsonObject>{
   Gson gson = new GsonBuilder().setPrettyPrinting().create();
   @Override
   public JsonObject handleRequest(Map<String,String> event, Context context)
