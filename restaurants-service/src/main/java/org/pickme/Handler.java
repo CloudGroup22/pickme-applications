@@ -80,7 +80,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
       // Close the connection
       conn.close();
     } catch (Exception e) {
-      logger.log("Exception: "+e,getMessage());
+      logger.log("Exception: "+e.getMessage());
       e.printStackTrace();
     }
     return response;
