@@ -22,10 +22,10 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
         LambdaLogger logger = context.getLogger();
         String response = "200 OK\n";
         logger.log(String.valueOf(event));
-        //logger.log("ENVIRONMENT VARIABLES: " + gson.toJson(System.getenv()));
-//        logger.log("CONTEXT: " + gson.toJson(context));
-//        logger.log("EVENT: " + gson.toJson(event));
-//        logger.log("EVENT TYPE: " + event.getClass());
+        String evenParams = gson.toJson(event);
+        JsonObject paramObj = new Gson().fromJson(evenParams, JsonObject.class);
+        logger.log("paramObj: " + paramObj);
+        logger.log("paramObj Name: " + paramObj.get("name"));
 //
 //        String evenParams = gson.toJson(event);
 //        JsonObject paramObj = new Gson().fromJson(evenParams, JsonObject.class);
