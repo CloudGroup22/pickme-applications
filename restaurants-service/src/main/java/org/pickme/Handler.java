@@ -61,15 +61,16 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
       if(!paramObj.get("name").toString().replaceAll("\"", "").equals("") && !paramObj.get("rating").toString().replaceAll("\"", "").equals("")) {
         logger.log("paramObj Name and rating has content 2: " + paramObj.get("name").toString() +","+paramObj.get("rating").toString());
         stmt.setString(1,paramObj.get("name").toString()+ "%");
-        stmt.setString(2,paramObj.get("rating").toString()+ "%");
+        stmt.setFloat(2,paramObj.get("rating").toFloat()+ "%");
       }else if(!paramObj.get("name").toString().replaceAll("\"", "").equals("")) {
         logger.log("name only 2: " + paramObj.get("name").toString().replaceAll("\"", ""));
         stmt.setString(1,paramObj.get("name").toString().replaceAll("\"", "")+ "%");
         logger.log("name only 2: " + stmt);
         logger.log("name only 2: " + stmt);
+        logger.log("name only 2: " + stmt);
       }else if(!paramObj.get("rating").toString().replaceAll("\"", "").equals("")) {
         logger.log("rating only 2: " + paramObj.get("rating").toString());
-        stmt.setString(1,paramObj.get("rating").toString()+ "%");
+        stmt.setFloat(1,paramObj.get("rating").toFloat()+ "%");
       }
 
       ResultSet rs = stmt.executeQuery();
