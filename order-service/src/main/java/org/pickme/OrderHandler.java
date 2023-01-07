@@ -8,10 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Map;
 
 public class OrderHandler implements RequestHandler<Map<String,String>, String>{
@@ -36,12 +33,27 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
             // Connect to the database
             Connection conn = DriverManager.getConnection("jdbc:mysql://pickmefood.cn4g5pawgjm1.us-east-1.rds.amazonaws.com:3306/pickmefood", "admin", "OgXqylVqq7LldFMq1tY8");
 
+            String query = " insert into OrderDetails (idCustomer, isAccepted, isActive, deliveryStatus, idRestaurant, price)"
+                    + " values (?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt (1, 1);
+            preparedStmt.setInt (2, 1);
+            preparedStmt.setInt   (3, 1);
+            preparedStmt.setString(4, paramObj.get("name").toString());
+            preparedStmt.setInt    (5, 1);
+            preparedStmt.setString(6, "1000");
+            logger.log("quary  "+ query);
+            boolean execute = preparedStmt.execute();
+            logger.log("rs  "+ execute);
+
+
             // Execute a query and print the result
-            Statement statement = conn.createStatement();
-            logger.log("quary  " + "INSERT INTO OrderDetails" + "(`idCustomer`,`isAccepted`,`isActive`,`deliveryStatus`,`idRestaurant`)" + "VALUES (1, 1, 1,"+paramObj.get("name")+", 1)");
-            int rs = statement.executeUpdate("INSERT INTO OrderDetails" + "(`idCustomer`,`isAccepted`,`isActive`,`deliveryStatus`,`idRestaurant`)" + "VALUES (1, 1, 1,"+paramObj.get("name")+", 1)");
-//            int rs = statement.executeUpdate("INSERT INTO OrderDetails " + "VALUES (1, 1, 1,`Delivered.`, 1, 2)");
-            logger.log("rs"+ rs);
+//            Statement statement = conn.createStatement();
+//            logger.log("quary  " + "INSERT INTO OrderDetails" + "(`idCustomer`,`isAccepted`,`isActive`,`deliveryStatus`,`idRestaurant`)" + "VALUES (1, 1, 1,"+paramObj.get("name")+", 1)");
+//            ResultSet rs = statement.executeQuery("INSERT INTO OrderDetails" + "(`idCustomer`,`isAccepted`,`isActive`,`deliveryStatus`,`idRestaurant`)" + "VALUES (1, 1, 1,"+paramObj.get("name")+", 1)");
+////            int rs = statement.executeUpdate("INSERT INTO OrderDetails " + "VALUES (1, 1, 1,`Delivered.`, 1, 2)");
+//            logger.log("rs"+ rs);
 
 //            while (rs.next()) {
 //                return rs.getString(1) + "\n";
