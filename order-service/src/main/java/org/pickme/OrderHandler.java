@@ -10,7 +10,6 @@ import com.google.gson.JsonObject;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Map;
 
@@ -37,11 +36,13 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
             Connection conn = DriverManager.getConnection("jdbc:mysql://pickmefood.cn4g5pawgjm1.us-east-1.rds.amazonaws.com:3306/pickmefood", "admin", "OgXqylVqq7LldFMq1tY8");
 
             // Execute a query and print the result
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT deliveryStatus FROM OrderDetails");
-            while (rs.next()) {
-                return rs.getString(1) + "\n";
-            }
+            Statement statement = conn.createStatement();
+//            ResultSet rs = statement.executeQuery("SELECT deliveryStatus FROM OrderDetails");
+            int rs = statement.executeUpdate("INSERT INTO OrderDetails " + "VALUES (1, 1, 1,'Delivered.', 1, 2)");
+            logger.log("rs"+ rs);
+//            while (rs.next()) {
+//                return rs.getString(1) + "\n";
+//            }
 
             // Close the connection
             conn.close();
