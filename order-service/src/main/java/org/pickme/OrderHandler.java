@@ -44,10 +44,10 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
             preparedStmtCus.setString(2, paramObj.get("cusTp").toString());
             preparedStmtCus.setString(3, paramObj.get("cusAddress").toString());
             logger.log("quary  "+ cusQuery);
-            int executeCus = preparedStmtCus.executeUpdate(cusQuery,55);
+            int executeCus = preparedStmtCus.executeUpdate();
             logger.log("rsCus  "+ executeCus);
 
-            if(true){
+            if(executeCus == 1){
                 PreparedStatement preparedStmt = conn.prepareStatement(query);
                 preparedStmt.setInt (1, executeCus);
                 preparedStmt.setInt (2, 1);
@@ -56,7 +56,7 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
                 preparedStmt.setInt    (5, 1);
                 preparedStmt.setString(6, "1000");
                 logger.log("quary  "+ query);
-                boolean execute = preparedStmt.execute();
+                int execute = preparedStmt.executeUpdate();
                 logger.log("rs Order =>>>> "+ execute);
             }
 
