@@ -38,8 +38,8 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
 
             // Execute a query and print the result
             Statement statement = conn.createStatement();
-            logger.log("quary  " + "INSERT INTO OrderDetails" + "('idCustomer','isAccepted','isActive','deliveryStatus','idRestaurant')" + "VALUES (1, 1, 1,'Delivered.', 1, 2)");
-            ResultSet rs = statement.executeQuery("INSERT INTO OrderDetails" + "('idCustomer','isAccepted','isActive','deliveryStatus','idRestaurant')" + "VALUES (1, 1, 1,'Delivered.', 1, 2)");
+            logger.log("quary  " + "INSERT INTO OrderDetails" + "('idCustomer','isAccepted','isActive','deliveryStatus','idRestaurant')" + "VALUES (1, 1, 1,'Delivered.', 1)");
+            ResultSet rs = statement.executeQuery("INSERT INTO OrderDetails" + "('idCustomer','isAccepted','isActive','deliveryStatus','idRestaurant')" + "VALUES (1, 1, 1,'Delivered.', 1)");
 //            int rs = statement.executeUpdate("INSERT INTO OrderDetails " + "VALUES (1, 1, 1,'Delivered.', 1, 2)");
             logger.log("rs"+ rs);
 
