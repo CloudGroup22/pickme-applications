@@ -38,24 +38,24 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
             String query = " insert into OrderDetails (idCustomer, isAccepted, isActive, deliveryStatus, idRestaurant, price)"
                     + " values (?, ?, ?, ?, ?, ?)";
 
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setInt (1, 1);
-            preparedStmt.setInt (2, 1);
-            preparedStmt.setInt   (3, 1);
-            preparedStmt.setString(4, "Pending");
-            preparedStmt.setInt    (5, 1);
-            preparedStmt.setString(6, "1000");
-            logger.log("quary  "+ query);
-            boolean execute = preparedStmt.execute();
-            logger.log("rs  "+ execute);
-
-//            PreparedStatement preparedStmtCus = conn.prepareStatement(cusQuery);
-//            preparedStmt.setString(4, paramObj.get("cusName").toString());
-//            preparedStmt.setString(4, paramObj.get("cusTp").toString());
-//            preparedStmt.setString(4, paramObj.get("cusAddress").toString());
+//            PreparedStatement preparedStmt = conn.prepareStatement(query);
+//            preparedStmt.setInt (1, 1);
+//            preparedStmt.setInt (2, 1);
+//            preparedStmt.setInt   (3, 1);
+//            preparedStmt.setString(4, "Pending");
+//            preparedStmt.setInt    (5, 1);
+//            preparedStmt.setString(6, "1000");
 //            logger.log("quary  "+ query);
-//            boolean executeCus = preparedStmt.execute();
-//            logger.log("rsCus  "+ executeCus);
+//            boolean execute = preparedStmt.execute();
+//            logger.log("rs  "+ execute);
+
+            PreparedStatement preparedStmtCus = conn.prepareStatement(cusQuery);
+            preparedStmtCus.setString(1, paramObj.get("cusName").toString());
+            preparedStmtCus.setString(1, paramObj.get("cusTp").toString());
+            preparedStmtCus.setString(1, paramObj.get("cusAddress").toString());
+            logger.log("quary  "+ query);
+            boolean executeCus = preparedStmtCus.execute();
+            logger.log("rsCus  "+ executeCus);
 
 
             // Execute a query and print the result
