@@ -31,8 +31,6 @@ public class DeliveryHandler implements RequestHandler<Map<String,String>, Strin
     String evenParams = gson.toJson(event);
     JsonObject paramObj = new Gson().fromJson(evenParams, JsonObject.class);
     logger.log("paramObj: " + paramObj);
-    logger.log("paramObj: " + paramObj.get("name"));
-    logger.log("paramObj: " + paramObj.get("rating"));
 
 //    JSONObject paramObj = new JSONObject(evenParams);
 
@@ -44,7 +42,6 @@ public class DeliveryHandler implements RequestHandler<Map<String,String>, Strin
       // Execute a query and print the result
       String statementString = "SELECT isAccepted,isActive,deliveryStatus,idRestaurant FROM OrderDetails";
       if(!paramObj.get("orderId").toString().replaceAll("\"", "").equals("")) {
-        logger.log("paramObj Name has content: " + paramObj.get("name").toString());
         statementString += " WHERE idOrder = ?";
       }
 
