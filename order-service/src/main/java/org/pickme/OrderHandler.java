@@ -44,12 +44,12 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
             preparedStmtCus.setString(2, paramObj.get("cusTp").toString());
             preparedStmtCus.setString(3, paramObj.get("cusAddress").toString());
             logger.log("quary  "+ cusQuery);
-            ResultSet resultSet = preparedStmtCus.executeQuery(cusQuery);
-            logger.log("rsCus  "+ resultSet.toString());
+            int executeCus = preparedStmtCus.executeUpdate(cusQuery,55);
+            logger.log("rsCus  "+ executeCus);
 
             if(true){
                 PreparedStatement preparedStmt = conn.prepareStatement(query);
-                preparedStmt.setInt (1, 1);
+                preparedStmt.setInt (1, executeCus);
                 preparedStmt.setInt (2, 1);
                 preparedStmt.setInt   (3, 1);
                 preparedStmt.setString(4, "Pending");
