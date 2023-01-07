@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Map;
 
@@ -37,8 +38,8 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
 
             // Execute a query and print the result
             Statement statement = conn.createStatement();
-//            ResultSet rs = statement.executeQuery("SELECT deliveryStatus FROM OrderDetails");
-            int rs = statement.executeUpdate("INSERT INTO OrderDetails " + "VALUES (1, 1, 1,'Delivered.', 1, 2)");
+            ResultSet rs = statement.executeQuery("INSERT INTO OrderDetails " + "VALUES (1, 1, 1,'Delivered.', 1, 2)");
+//            int rs = statement.executeUpdate("INSERT INTO OrderDetails " + "VALUES (1, 1, 1,'Delivered.', 1, 2)");
             logger.log("rs"+ rs);
 
 //            while (rs.next()) {
