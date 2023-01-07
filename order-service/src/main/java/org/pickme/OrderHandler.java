@@ -32,7 +32,9 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
 
             // Connect to the database
             Connection conn = DriverManager.getConnection("jdbc:mysql://pickmefood.cn4g5pawgjm1.us-east-1.rds.amazonaws.com:3306/pickmefood", "admin", "OgXqylVqq7LldFMq1tY8");
-
+            conn.setAutoCommit(false);
+            String cusQuery = " insert into Customer (name, phoneNumber, address)"
+                    + " values (?, ?, ?)";
             String query = " insert into OrderDetails (idCustomer, isAccepted, isActive, deliveryStatus, idRestaurant, price)"
                     + " values (?, ?, ?, ?, ?, ?)";
 
@@ -40,12 +42,20 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
             preparedStmt.setInt (1, 1);
             preparedStmt.setInt (2, 1);
             preparedStmt.setInt   (3, 1);
-            preparedStmt.setString(4, paramObj.get("name").toString());
+            preparedStmt.setString(4, "Pending");
             preparedStmt.setInt    (5, 1);
             preparedStmt.setString(6, "1000");
             logger.log("quary  "+ query);
             boolean execute = preparedStmt.execute();
             logger.log("rs  "+ execute);
+
+//            PreparedStatement preparedStmtCus = conn.prepareStatement(cusQuery);
+//            preparedStmt.setString(4, paramObj.get("cusName").toString());
+//            preparedStmt.setString(4, paramObj.get("cusTp").toString());
+//            preparedStmt.setString(4, paramObj.get("cusAddress").toString());
+//            logger.log("quary  "+ query);
+//            boolean executeCus = preparedStmt.execute();
+//            logger.log("rsCus  "+ executeCus);
 
 
             // Execute a query and print the result
