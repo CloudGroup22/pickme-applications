@@ -51,9 +51,9 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
 
             PreparedStatement preparedStmtCus = conn.prepareStatement(cusQuery);
             preparedStmtCus.setString(1, paramObj.get("cusName").toString());
-            preparedStmtCus.setString(1, paramObj.get("cusTp").toString());
-            preparedStmtCus.setString(1, paramObj.get("cusAddress").toString());
-            logger.log("quary  "+ query);
+            preparedStmtCus.setString(2, paramObj.get("cusTp").toString());
+            preparedStmtCus.setString(3, paramObj.get("cusAddress").toString());
+            logger.log("quary  "+ cusQuery);
             boolean executeCus = preparedStmtCus.execute();
             logger.log("rsCus  "+ executeCus);
 
