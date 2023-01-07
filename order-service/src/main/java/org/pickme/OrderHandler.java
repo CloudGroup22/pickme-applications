@@ -32,7 +32,7 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
 
             // Connect to the database
             Connection conn = DriverManager.getConnection("jdbc:mysql://pickmefood.cn4g5pawgjm1.us-east-1.rds.amazonaws.com:3306/pickmefood", "admin", "OgXqylVqq7LldFMq1tY8");
-            conn.setAutoCommit(false);
+//            conn.setAutoCommit(false);
             String cusQuery = " insert into Customer (name, phoneNumber, address)"
                     + " values (?, ?, ?)";
             String query = " insert into OrderDetails (idCustomer, isAccepted, isActive, deliveryStatus, idRestaurant, price)"
