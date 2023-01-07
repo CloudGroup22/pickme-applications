@@ -56,7 +56,7 @@ public class DeliveryHandler implements RequestHandler<Map<String,String>, Strin
       while (rs.next()) {
 //        System.out.println(rs.getString(1));
         logger.log("results: " + rs.getString(1));
-        resultString += "\"{ \"isAccepted\": \""+rs.getBoolean(1)+"\", \"isActive\": \""+rs.getBoolean(2)+"\", \"deliveryStatus\": "+rs.getFloat(3)+", \"idRestaurant\":"+rs.getInt(4)+"}\",";
+        resultString += "\"{ \"isAccepted\": \""+rs.getBoolean(1)+"\", \"isActive\": \""+rs.getBoolean(2)+"\", \"deliveryStatus\": "+rs.getString(3)+", \"idRestaurant\":"+rs.getInt(4)+"}\",";
         logger.log("results String: " + resultString);
         logger.log("results String: " + resultString);
         //JsonObject resultObject = new Gson().fromJson(resultString, JsonObject.class);
