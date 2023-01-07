@@ -38,16 +38,6 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
             String query = " insert into OrderDetails (idCustomer, isAccepted, isActive, deliveryStatus, idRestaurant, price)"
                     + " values (?, ?, ?, ?, ?, ?)";
 
-//            PreparedStatement preparedStmt = conn.prepareStatement(query);
-//            preparedStmt.setInt (1, 1);
-//            preparedStmt.setInt (2, 1);
-//            preparedStmt.setInt   (3, 1);
-//            preparedStmt.setString(4, "Pending");
-//            preparedStmt.setInt    (5, 1);
-//            preparedStmt.setString(6, "1000");
-//            logger.log("quary  "+ query);
-//            boolean execute = preparedStmt.execute();
-//            logger.log("rs  "+ execute);
 
             PreparedStatement preparedStmtCus = conn.prepareStatement(cusQuery);
             preparedStmtCus.setString(1, paramObj.get("cusName").toString());
@@ -57,13 +47,29 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
             int executeCus = preparedStmtCus.executeUpdate();
             logger.log("rsCus  "+ executeCus);
 
+            if(executeCus == 1){
+                PreparedStatement preparedStmt = conn.prepareStatement(query);
+                preparedStmt.setInt (1, executeCus);
+                preparedStmt.setInt (2, 1);
+                preparedStmt.setInt   (3, 1);
+                preparedStmt.setString(4, "Pending");
+                preparedStmt.setInt    (5, 1);
+                preparedStmt.setString(6, "1000");
+                logger.log("quary  "+ query);
+                boolean execute = preparedStmt.execute();
+                logger.log("rs Order =>>>> "+ execute);
+            }
 
-            // Execute a query and print the result
-//            Statement statement = conn.createStatement();
-//            logger.log("quary  " + "INSERT INTO OrderDetails" + "(`idCustomer`,`isAccepted`,`isActive`,`deliveryStatus`,`idRestaurant`)" + "VALUES (1, 1, 1,"+paramObj.get("name")+", 1)");
-//            ResultSet rs = statement.executeQuery("INSERT INTO OrderDetails" + "(`idCustomer`,`isAccepted`,`isActive`,`deliveryStatus`,`idRestaurant`)" + "VALUES (1, 1, 1,"+paramObj.get("name")+", 1)");
-////            int rs = statement.executeUpdate("INSERT INTO OrderDetails " + "VALUES (1, 1, 1,`Delivered.`, 1, 2)");
-//            logger.log("rs"+ rs);
+
+
+
+
+//             Execute a query and print the result
+            Statement statement = conn.createStatement();
+            logger.log("quary  " + "INSERT INTO OrderDetails" + "(`idCustomer`,`isAccepted`,`isActive`,`deliveryStatus`,`idRestaurant`)" + "VALUES (1, 1, 1,"+paramObj.get("name")+", 1)");
+            ResultSet rs = statement.executeQuery("INSERT INTO OrderDetails" + "(`idCustomer`,`isAccepted`,`isActive`,`deliveryStatus`,`idRestaurant`)" + "VALUES (1, 1, 1,"+paramObj.get("name")+", 1)");
+//            int rs = statement.executeUpdate("INSERT INTO OrderDetails " + "VALUES (1, 1, 1,`Delivered.`, 1, 2)");
+            logger.log("rs"+ rs);
 
 //            while (rs.next()) {
 //                return rs.getString(1) + "\n";
