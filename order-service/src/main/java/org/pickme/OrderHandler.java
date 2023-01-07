@@ -40,6 +40,7 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
 //            ResultSet rs = statement.executeQuery("SELECT deliveryStatus FROM OrderDetails");
             int rs = statement.executeUpdate("INSERT INTO OrderDetails " + "VALUES (1, 1, 1,'Delivered.', 1, 2)");
             logger.log("rs"+ rs);
+
 //            while (rs.next()) {
 //                return rs.getString(1) + "\n";
 //            }
