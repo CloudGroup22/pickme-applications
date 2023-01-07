@@ -23,7 +23,6 @@ public class DeliveryHandler implements RequestHandler<Map<String,String>, Strin
     //logger.log("ENVIRONMENT VARIABLES: " + gson.toJson(System.getenv()));
     logger.log("CONTEXT: " + gson.toJson(context));
     logger.log("EVENT: " + gson.toJson(event));
-    logger.log("EVENT TYPE: " + event.getClass());
 
     try {
 
