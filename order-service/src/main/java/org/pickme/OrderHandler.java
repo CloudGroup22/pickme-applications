@@ -17,7 +17,8 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
     public String handleRequest(Map<String,String> event, Context context)
     {
         LambdaLogger logger = context.getLogger();
-        String response = "200 OK\n";
+        String response200 = "200 OK\n Transaction Success";
+        String response417 = "417 OK\n Transaction Failed";
         logger.log(String.valueOf(event));
         String evenParams = gson.toJson(event);
         JsonObject paramObj = new Gson().fromJson(evenParams, JsonObject.class);
@@ -30,9 +31,11 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
 
         try {
 
+            int execute = 0;
+
             // Connect to the database
             Connection conn = DriverManager.getConnection("jdbc:mysql://pickmefood.cn4g5pawgjm1.us-east-1.rds.amazonaws.com:3306/pickmefood", "admin", "OgXqylVqq7LldFMq1tY8");
-//            conn.setAutoCommit(false);
+            conn.setAutoCommit(false);
             String cusQuery = " insert into Customer (name, phoneNumber, address)"
                     + " values (?, ?, ?)";
             String query = " insert into OrderDetails (idCustomer, isAccepted, isActive, deliveryStatus, idRestaurant, price)"
@@ -54,32 +57,32 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
                 preparedStmt.setInt   (3, 1);
                 preparedStmt.setString(4, "Pending");
                 preparedStmt.setInt    (5, 1);
-                preparedStmt.setString(6, "1000");
+                preparedStmt.setInt(6, paramObj.get("idRest").getAsInt());
                 logger.log("quary  "+ query);
-                int execute = preparedStmt.executeUpdate();
+                execute = preparedStmt.executeUpdate();
                 logger.log("rs Order =>>>> "+ execute);
+            }
+            if(execute == 1){
+                conn.setAutoCommit(false);
+            }else {
+                conn.rollback();
             }
 
 
+////             Execute a query and print the result
+//            Statement statement = conn.createStatement();
+//            logger.log("quary  " + "INSERT INTO OrderDetails" + "(`idCustomer`,`isAccepted`,`isActive`,`deliveryStatus`,`idRestaurant`)" + "VALUES (1, 1, 1,"+paramObj.get("name")+", 1)");
+//            ResultSet rs = statement.executeQuery("INSERT INTO OrderDetails" + "(`idCustomer`,`isAccepted`,`isActive`,`deliveryStatus`,`idRestaurant`)" + "VALUES (1, 1, 1,"+paramObj.get("name")+", 1)");
+//            logger.log("rs"+ rs);
+//
 
-
-
-//             Execute a query and print the result
-            Statement statement = conn.createStatement();
-            logger.log("quary  " + "INSERT INTO OrderDetails" + "(`idCustomer`,`isAccepted`,`isActive`,`deliveryStatus`,`idRestaurant`)" + "VALUES (1, 1, 1,"+paramObj.get("name")+", 1)");
-            ResultSet rs = statement.executeQuery("INSERT INTO OrderDetails" + "(`idCustomer`,`isAccepted`,`isActive`,`deliveryStatus`,`idRestaurant`)" + "VALUES (1, 1, 1,"+paramObj.get("name")+", 1)");
-//            int rs = statement.executeUpdate("INSERT INTO OrderDetails " + "VALUES (1, 1, 1,`Delivered.`, 1, 2)");
-            logger.log("rs"+ rs);
-
-//            while (rs.next()) {
-//                return rs.getString(1) + "\n";
-//            }
 
             // Close the connection
             conn.close();
         } catch (Exception e) {
             e.printStackTrace();
+            return response417;
         }
-        return response;
+        return response200;
     }
 }
