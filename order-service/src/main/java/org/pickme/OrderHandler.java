@@ -54,7 +54,7 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
             preparedStmtCus.setString(2, paramObj.get("cusTp").toString());
             preparedStmtCus.setString(3, paramObj.get("cusAddress").toString());
             logger.log("quary  "+ cusQuery);
-            boolean executeCus = preparedStmtCus.execute();
+            int executeCus = preparedStmtCus.executeUpdate();
             logger.log("rsCus  "+ executeCus);
 
 
