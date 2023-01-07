@@ -51,7 +51,7 @@ public class DeliveryHandler implements RequestHandler<Map<String,String>, Strin
       logger.log("statementString: " + statementString);
       PreparedStatement stmt = conn.prepareStatement(statementString);
       if(!paramObj.get("orderId").toString().replaceAll("\"", "").equals("")) {
-        stmt.setString(1,paramObj.get("orderId").toString().replaceAll("\"", "")+ "%");
+        stmt.setInt(1,paramObj.get("orderId").getAsInt());
       }
 
       ResultSet rs = stmt.executeQuery();
