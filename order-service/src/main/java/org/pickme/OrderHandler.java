@@ -30,11 +30,9 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
 //        logger.log("paramObj: " + paramObj);
 
         try {
-
             int execute = 0;
 
             // Connect to the database
-            logger.log("Server Url ->>" + System.getenv("DEV_DBHOST"));
             Connection conn = DriverManager.getConnection(System.getenv("DBHOST"), System.getenv("USERNAME"), System.getenv("PW"));
 //            conn.setAutoCommit(false);
             String cusQuery = " insert into Customer (name, phoneNumber, address)"
