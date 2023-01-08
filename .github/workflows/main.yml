@@ -1,5 +1,5 @@
 name: deploy to lambda
-on: [push]
+on: [ push ]
 jobs:
 
   deploy_zip:
@@ -14,10 +14,11 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      # Restaurant service
       - name: Set environment variables for Restaurant Service Lambda function
         run: |
           aws lambda update-function-configuration \
-            --function-name pickmeRestaurantFunction \
+            --function-name ${{ secrets.DEV_RESTAURANT_LAMBDA_NAME }} \
             --environment "Variables={DBHOST=${{ secrets.DEV_DBHOST }},USERNAME=${{ secrets.DEV_USERNAME }}, PW=${{ secrets.DEV_PW }}}"
       - name: Build restaurants-service
         run: |
@@ -28,8 +29,14 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
-          function_name: pickmeRestaurantFunction
+          function_name: ${{ secrets.DEV_RESTAURANT_LAMBDA_NAME }}
           zip_file: restaurants-service/build/distributions/restaurants-service.zip
+      # Delivery service
+      - name: Set environment variables for Delivery Service Lambda function
+        run: |
+          aws lambda update-function-configuration \
+            --function-name ${{ secrets.DEV_DELIVERY_LAMBDA_NAME }} \
+            --environment "Variables={DBHOST=${{ secrets.DEV_DBHOST }},USERNAME=${{ secrets.DEV_USERNAME }}, PW=${{ secrets.DEV_PW }}}"
       - name: Build delivery-service
         run: |
           cd delivery-service && ./gradlew clean build -x check
@@ -39,8 +46,14 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
-          function_name: pickmeDeliveryFunction
+          function_name: ${{ secrets.DEV_DELIVERY_LAMBDA_NAME }}
           zip_file: delivery-service/build/distributions/delivery-service.zip
+      # Order service
+      - name: Set environment variables for Delivery Service Lambda function
+        run: |
+          aws lambda update-function-configuration \
+            --function-name ${{ secrets.DEV_ORDER_LAMBDA_NAME }} \
+            --environment "Variables={DBHOST=${{ secrets.DEV_DBHOST }},USERNAME=${{ secrets.DEV_USERNAME }}, PW=${{ secrets.DEV_PW }}}"
       - name: Build order-service
         run: |
           cd order-service && ./gradlew clean build -x check
@@ -50,8 +63,14 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
-          function_name: pickmeOrderFunction
+          function_name: ${{ secrets.DEV_ORDER_LAMBDA_NAME }}
           zip_file: order-service/build/distributions/order-service.zip
+      # Check order status service
+      - name: Set environment variables for Delivery Service Lambda function
+        run: |
+          aws lambda update-function-configuration \
+            --function-name ${{ secrets.DEV_CHANGE_ORDER_STATUS_LAMBDA_NAME }} \
+            --environment "Variables={DBHOST=${{ secrets.DEV_DBHOST }},USERNAME=${{ secrets.DEV_USERNAME }}, PW=${{ secrets.DEV_PW }}}
       - name: Build order-status-service
         run: |
           cd order-status-service && ./gradlew clean build -x check
@@ -61,6 +80,6 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
-          function_name: pickmeChangeOrderStatusFunction
+          function_name: ${{ secrets.DEV_CHANGE_ORDER_STATUS_LAMBDA_NAME }}
           zip_file: order-status-service/build/distributions/order-status-service.zip
 
