@@ -18,7 +18,7 @@ jobs:
         run: |
           aws lambda update-function-configuration \
             --function-name pickmeRestaurantFunction \
-            --environment Variables={DBHOST=${{ secrets.DEV_DBHOST }},USERNAME=${{ secrets.DEV_USERNAME }}, PW=${{ secrets.DEV_PW }}}
+            --environment "Variables={DBHOST=${{ secrets.DEV_DBHOST }},USERNAME=${{ secrets.DEV_USERNAME }}, PW=${{ secrets.DEV_PW }}}"
       - name: Build restaurants-service
         run: |
           cd restaurants-service && ./gradlew clean build -x check
