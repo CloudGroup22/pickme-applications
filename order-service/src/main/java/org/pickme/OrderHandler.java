@@ -35,7 +35,7 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
 
             // Connect to the database
             logger.log("Server Url ->>" + System.getenv("DEV_DBHOST"));
-            Connection conn = DriverManager.getConnection(System.getenv("DEV_DBHOST"), System.getenv("DEV_USERNAME"), System.getenv("DEV_PW"));
+            Connection conn = DriverManager.getConnection(System.getenv("DBHOST"), System.getenv("USERNAME"), System.getenv("PW"));
 //            conn.setAutoCommit(false);
             String cusQuery = " insert into Customer (name, phoneNumber, address)"
                     + " values (?, ?, ?)";
