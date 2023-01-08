@@ -15,7 +15,7 @@ import java.sql.PreparedStatement;
 import java.util.Map;
 import com.google.gson.JsonObject;
 
-public class DeliveryHandler implements RequestHandler<Map<String,String>, String>{
+public class StatusHandler implements RequestHandler<Map<String,String>, String>{
   Gson gson = new GsonBuilder().setPrettyPrinting().create();
   @Override
   public String handleRequest(Map<String,String> event, Context context)
