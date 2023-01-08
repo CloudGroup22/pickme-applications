@@ -37,7 +37,7 @@ public class DeliveryHandler implements RequestHandler<Map<String,String>, Strin
     try {
 
       // Connect to the database
-      Connection conn = DriverManager.getConnection("jdbc:mysql://pickmefood.cn4g5pawgjm1.us-east-1.rds.amazonaws.com:3306/pickmefood?useSSL=false", "admin", "OgXqylVqq7LldFMq1tY8");
+      Connection conn = DriverManager.getConnection("jdbc:mysql://"+System.getenv("DBHOST"), System.getenv("USERNAME"), System.getenv("PW"));
 
       // Execute a query and print the result
       String statementString = "SELECT isAccepted,isActive,deliveryStatus,idRestaurant FROM OrderDetails";
