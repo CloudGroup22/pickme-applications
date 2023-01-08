@@ -48,7 +48,6 @@ jobs:
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: pickmePlaceOrderFunction
           zip_file: delivery-service/build/distributions/order-service.zip
-
       - name: Build order-status-service
         run: |
           cd order-status-service && ./gradlew clean build -x check
