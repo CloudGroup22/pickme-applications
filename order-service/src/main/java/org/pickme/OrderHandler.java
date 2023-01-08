@@ -35,8 +35,8 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
 
             // Connect to the database
             logger.log("Server Url ->>" + System.getenv("DEV_DBHOST"));
-            Connection conn = DriverManager.getConnection("jdbc:mysql://pickmefood.cn4g5pawgjm1.us-east-1.rds.amazonaws.com:3306/pickmefood", "admin", "OgXqylVqq7LldFMq1tY8");
-            conn.setAutoCommit(false);
+            Connection conn = DriverManager.getConnection(System.getenv("DBHOST"), System.getenv("USERNAME"), System.getenv("PW"));
+//            conn.setAutoCommit(false);
             String cusQuery = " insert into Customer (name, phoneNumber, address)"
                     + " values (?, ?, ?)";
             String query = " insert into OrderDetails (idCustomer, isAccepted, isActive, deliveryStatus, idRestaurant, price)"
@@ -64,9 +64,9 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
                 logger.log("rs Order =>>>> "+ execute);
             }
             if(execute == 1){
-                conn.setAutoCommit(false);
+//                conn.setAutoCommit(false);
             }else {
-                conn.rollback();
+//                conn.rollback();
             }
 
 
