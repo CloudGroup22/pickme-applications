@@ -58,10 +58,10 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
                 preparedStmt.setInt    (5, 1);
                 preparedStmt.setInt(6, paramObj.get("idRest").getAsInt());
                 logger.log("quary  "+ query);
-                execute = preparedStmt.executeUpdate(query);
-                ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
+                execute = preparedStmt.executeUpdate(query,Statement.RETURN_GENERATED_KEYS);
+//                ResultSet generatedKeys = preparedStmt.;
                 logger.log("rs Order =>>>> "+ execute);
-                logger.log("rs generatedKeys =>>>> "+ generatedKeys);
+//                logger.log("rs generatedKeys =>>>> "+ generatedKeys);
             }
 //            if(execute == 1){
 ////                conn.setAutoCommit(false);
