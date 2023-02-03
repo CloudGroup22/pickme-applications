@@ -94,7 +94,7 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
             return response417;
         }
 
-        return response200 +"   "+risultato ;
+        return response200 +" | Order Id -"+risultato ;
 
     }
 
