@@ -47,7 +47,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
       Connection conn = DriverManager.getConnection("jdbc:mysql://"+System.getenv("DBHOST"), System.getenv("USERNAME"), System.getenv("PW"));
 
       // Execute a query and print the result
-      String statementString = "SELECT * FROM Restaurant";
+      String statementString = "SELECT name,description,rating,menu FROM Restaurant";
       if(!paramObj.get("name").toString().replaceAll("\"", "").equals("")) {
         logger.log("paramObj Name has content: " + paramObj.get("name").toString());
         statementString += " WHERE name LIKE ?";
@@ -78,7 +78,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
       while (rs.next()) {
 //        System.out.println(rs.getString(1));
         logger.log("results: " + rs.getString(1));
-        resultString += "\"{ \"name\": \""+rs.getString(1)+"\", \"Restaurant Id\": \""+paramObj.get("idRestaurant").getAsFloat()+"\", \"descriptionDetails\": \""+rs.getString(2)+"\", \"rating\": "+rs.getFloat(3)+paramObj.get("Menu").getAsFloat()+"}\",";
+        resultString += "\"{ \"name\": \""+rs.getString(1)+"\", \"descriptionDetails\": \""+rs.getString(2)+"\", \"rating\": "+rs.getFloat(3)+"}\",";
         logger.log("results String: " + resultString);
         logger.log("results String: " + resultString);
         //JsonObject resultObject = new Gson().fromJson(resultString, JsonObject.class);
