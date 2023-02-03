@@ -60,8 +60,12 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
                 logger.log("quary  "+ query);
                 execute = preparedStmt.executeUpdate();
                 ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
+                String risultato = "_";
+                if (generatedKeys.next()){
+                     risultato = generatedKeys.getString(1);
+                }
                 logger.log("rs Order =>>>> "+ execute);
-                logger.log("rs generatedKeys =>>>> "+ generatedKeys);
+                logger.log("rs generatedKeys =>>>> "+ risultato);
             }
             if(execute == 1){
 //                conn.setAutoCommit(false);
