@@ -30,7 +30,7 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
 //        logger.log("paramObj: " + paramObj);
 
         try {
-            int execute;
+            ResultSet execute;
 
             // Connect to the database
             Connection conn = DriverManager.getConnection("jdbc:mysql://"+System.getenv("DBHOST"), System.getenv("USERNAME"), System.getenv("PW"));
@@ -50,7 +50,7 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
             logger.log("rsCus  "+ executeCus);
 
             if(executeCus == 1){
-                PreparedStatement preparedStmt = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement preparedStmt = conn.prepareStatement(query);
                 preparedStmt.setInt (1, executeCus);
                 preparedStmt.setInt (2, 1);
                 preparedStmt.setInt   (3, 1);
@@ -58,10 +58,10 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
                 preparedStmt.setInt    (5, 1);
                 preparedStmt.setInt(6, paramObj.get("idRest").getAsInt());
                 logger.log("quary  "+ query);
-                execute = preparedStmt.executeUpdate(query);
-                ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
+                execute = preparedStmt.executeQuery(query);
+//                ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
                 logger.log("rs Order =>>>> "+ execute);
-                logger.log("rs generatedKeys =>>>> "+ generatedKeys);
+//                logger.log("rs generatedKeys =>>>> "+ generatedKeys);
             }
 //            if(execute == 1){
 ////                conn.setAutoCommit(false);
