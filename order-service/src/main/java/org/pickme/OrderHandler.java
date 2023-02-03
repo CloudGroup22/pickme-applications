@@ -28,7 +28,7 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
 //        String evenParams = gson.toJson(event);
 //        JsonObject paramObj = new Gson().fromJson(evenParams, JsonObject.class);
 //        logger.log("paramObj: " + paramObj);
-
+        String risultato = "_";
         try {
             int execute = 0;
 
@@ -60,7 +60,7 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
                 logger.log("quary  "+ query);
                 execute = preparedStmt.executeUpdate();
                 ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
-                String risultato = "_";
+
                 if (generatedKeys.next()){
                      risultato = generatedKeys.getString(1);
                 }
@@ -88,6 +88,6 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
             e.printStackTrace();
             return response417;
         }
-        return response200;
+        return response200 +"   "+risultato ;
     }
 }
