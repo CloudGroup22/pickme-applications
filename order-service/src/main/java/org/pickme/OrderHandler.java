@@ -60,8 +60,8 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
                 preparedStmt.setInt (2, 1);
                 preparedStmt.setInt   (3, 1);
                 preparedStmt.setString(4, "Pending");
-                preparedStmt.setInt    (5, 1);
-                preparedStmt.setInt(6, paramObj.get("idRest").getAsInt());
+                preparedStmt.setInt    (5, paramObj.get("idRest").getAsInt());
+                preparedStmt.setInt(6, paramObj.get("price").getAsInt());
                 logger.log("quary  "+ query);
                 execute = preparedStmt.executeUpdate();
                 ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
