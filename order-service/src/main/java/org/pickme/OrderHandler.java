@@ -29,6 +29,7 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
 //        JsonObject paramObj = new Gson().fromJson(evenParams, JsonObject.class);
 //        logger.log("paramObj: " + paramObj);
         String risultato = "_";
+        String risultatoCus = "_";
         try {
             int execute = 0;
 
@@ -41,17 +42,21 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
                     + " values (?, ?, ?, ?, ?, ?)";
 
 
-            PreparedStatement preparedStmtCus = conn.prepareStatement(cusQuery);
+            PreparedStatement preparedStmtCus = conn.prepareStatement(cusQuery,Statement.RETURN_GENERATED_KEYS);
             preparedStmtCus.setString(1, paramObj.get("cusName").toString());
             preparedStmtCus.setString(2, paramObj.get("cusTp").toString());
             preparedStmtCus.setString(3, paramObj.get("cusAddress").toString());
             logger.log("quary  "+ cusQuery);
             int executeCus = preparedStmtCus.executeUpdate();
-            logger.log("rsCus  "+ executeCus);
+            ResultSet generatedKeysCus = preparedStmtCus.getGeneratedKeys();
+            if (generatedKeysCus.next()){
+                risultatoCus = generatedKeysCus.getString(1);
+            }
+            logger.log("rsCus  "+ risultatoCus);
 
             if(executeCus == 1){
                 PreparedStatement preparedStmt = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
-                preparedStmt.setInt (1, executeCus);
+                preparedStmt.setInt (1, Integer.parseInt(risultatoCus));
                 preparedStmt.setInt (2, 1);
                 preparedStmt.setInt   (3, 1);
                 preparedStmt.setString(4, "Pending");
@@ -67,11 +72,11 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
                 logger.log("rs Order =>>>> "+ execute);
                 logger.log("rs generatedKeys =>>>> "+ risultato);
             }
-            if(execute == 1){
-//                conn.setAutoCommit(false);
-            }else {
-//                conn.rollback();
-            }
+//            if(execute == 1){
+////                conn.setAutoCommit(false);
+//            }else {
+////                conn.rollback();
+//            }
 
 
 ////             Execute a query and print the result
@@ -88,6 +93,9 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
             e.printStackTrace();
             return response417;
         }
+
         return response200 +"   "+risultato ;
+
     }
+
 }
