@@ -78,7 +78,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
       while (rs.next()) {
 //        System.out.println(rs.getString(1));
         logger.log("results: " + rs.getString(1));
-        resultString += "\"{ \"name\": \""+rs.getString(1)+"\", \"descriptionDetails\": \""+rs.getString(2)+"\", \"rating\": "+rs.getFloat(3)+"}\",";
+        resultString += "\"{ \"name\": \""+rs.getString(2)+"\", \"Restaurant Id\": \""+rs.getInt(1)+"\", \"descriptionDetails\": \""+rs.getString(3)+"\", \"rating\": "+rs.getFloat(3) + "\", \"menu\": " + rs.getString(4) + "}\",";
         logger.log("results String: " + resultString);
         logger.log("results String: " + resultString);
         //JsonObject resultObject = new Gson().fromJson(resultString, JsonObject.class);
