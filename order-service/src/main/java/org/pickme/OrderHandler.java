@@ -30,7 +30,7 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
 //        logger.log("paramObj: " + paramObj);
 
         try {
-            boolean execute;
+            ResultSet execute;
 
             // Connect to the database
             Connection conn = DriverManager.getConnection("jdbc:mysql://"+System.getenv("DBHOST"), System.getenv("USERNAME"), System.getenv("PW"));
@@ -58,10 +58,8 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
                 preparedStmt.setInt    (5, 1);
                 preparedStmt.setInt(6, paramObj.get("idRest").getAsInt());
                 logger.log("quary  "+ query);
-                execute = preparedStmt.execute(query);
-//                ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
+                execute = preparedStmt.executeQuery(query);
                 logger.log("rs Order =>>>> "+ execute);
-//                logger.log("rs generatedKeys =>>>> "+ generatedKeys);
             }
 //            if(execute == 1){
 ////                conn.setAutoCommit(false);
@@ -84,7 +82,6 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
             e.printStackTrace();
             return response417;
         }
-
         return response200;
     }
 }
