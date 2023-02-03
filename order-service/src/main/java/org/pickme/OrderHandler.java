@@ -49,18 +49,18 @@ public class OrderHandler implements RequestHandler<Map<String,String>, String>{
             int executeCus = preparedStmtCus.executeUpdate();
             logger.log("rsCus  "+ executeCus);
 
-            if(executeCus == 1){
-                PreparedStatement preparedStmt = conn.prepareStatement(query);
-                preparedStmt.setInt (1, executeCus);
-                preparedStmt.setInt (2, 1);
-                preparedStmt.setInt   (3, 1);
-                preparedStmt.setString(4, "Pending");
-                preparedStmt.setInt    (5, 1);
-                preparedStmt.setInt(6, paramObj.get("idRest").getAsInt());
-                logger.log("quary  "+ query);
-                execute = preparedStmt.executeUpdate();
-                logger.log("rs Order =>>>> "+ execute);
-            }
+//            if(executeCus == 1){
+//                PreparedStatement preparedStmt = conn.prepareStatement(query);
+//                preparedStmt.setInt (1, executeCus);
+//                preparedStmt.setInt (2, 1);
+//                preparedStmt.setInt   (3, 1);
+//                preparedStmt.setString(4, "Pending");
+//                preparedStmt.setInt    (5, 1);
+//                preparedStmt.setInt(6, paramObj.get("idRest").getAsInt());
+//                logger.log("quary  "+ query);
+//                execute = preparedStmt.executeUpdate();
+//                logger.log("rs Order =>>>> "+ execute);
+//            }
             if(execute == 1){
 //                conn.setAutoCommit(false);
             }else {
