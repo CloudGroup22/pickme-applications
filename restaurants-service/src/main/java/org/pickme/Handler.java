@@ -47,7 +47,7 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
       Connection conn = DriverManager.getConnection("jdbc:mysql://"+System.getenv("DBHOST"), System.getenv("USERNAME"), System.getenv("PW"));
 
       // Execute a query and print the result
-      String statementString = "SELECT name,description,rating,menu FROM Restaurant";
+      String statementString = "SELECT * FROM Restaurant";
       if(!paramObj.get("name").toString().replaceAll("\"", "").equals("")) {
         logger.log("paramObj Name has content: " + paramObj.get("name").toString());
         statementString += " WHERE name LIKE ?";
@@ -88,7 +88,8 @@ public class Handler implements RequestHandler<Map<String,String>, String>{
 
       // Close the connection
       conn.close();
-      return resultString.substring(0, resultString.length() - 1) +"]";
+//      return resultString.substring(0, resultString.length() - 1) +"]";
+      return rs.toString();
     } catch (Exception e) {
       logger.log("Exception:: "+e.getMessage());
       e.printStackTrace();
